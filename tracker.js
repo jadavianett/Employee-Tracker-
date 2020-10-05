@@ -58,6 +58,10 @@ function init() {
     });
 }
 
+function viewAllEmployees () {
+
+}
+
 function addEmployee() {
   inquirer.prompt([
     {
@@ -79,9 +83,14 @@ function addEmployee() {
         "Salesperson",
         "Lead Engineer",
         "Software Engineer",
+        "R&D Team Lead",
+        "HR Director",
         "Account Manager",
+        "Lawyer",
         "Accountant",
         "Legal Team Lead",
+        "Marketing Consultant",
+        "Marketing Analyst",
       ],
     },
     {
@@ -99,4 +108,6 @@ function addEmployee() {
       ],
     },
   ]);
+//   TODO: handle asynchronicity here 
+//   console.log(`Added ${firstName} ${lastName} to database.`)
 }
