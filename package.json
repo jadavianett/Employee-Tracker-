@@ -4,7 +4,8 @@
   "description": "CLI that allows you to store employee information.",
   "main": "tracker.js",
   "scripts": {
-    "test": "start"
+    "test": "start",
+    "watch": "nodemon tracker.js"
   },
   "repository": {
     "type": "git",
