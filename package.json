@@ -1,0 +1,23 @@
+{
+  "name": "employee-tracker-",
+  "version": "1.0.0",
+  "description": "CLI that allows you to store employee information.",
+  "main": "tracker.js",
+  "scripts": {
+    "test": "start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jadavianett/Employee-Tracker-.git"
+  },
+  "author": "Jada Arnett",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.16.0",
+    "inquirer": "^7.3.3"
+  },
+  "bugs": {
+    "url": "https://github.com/jadavianett/Employee-Tracker-/issues"
+  },
+  "homepage": "https://github.com/jadavianett/Employee-Tracker-#readme"
+}
