@@ -91,6 +91,19 @@ function viewAllRoles() {
 }
 
 function addEmployee() {
+  let roleArray= [];
+  connection.query("SELECT title, id FROM role", (err, res) => {
+    if (err) throw err;
+    if (res.length > 0) {
+      for (let i=0; i<res.length;i++) {
+        const roleObject = {
+          name: res[i].title,
+          value: res[i].id,
+        };
+        roleArray.push(roleObject);
+      }
+    }
+  });
   inquirer
     .prompt([
       {
@@ -107,20 +120,7 @@ function addEmployee() {
         name: "role",
         message: "What is the employee's role?",
         type: "list",
-        choices: [
-          "Sales Lead",
-          "Salesperson",
-          "Lead Engineer",
-          "Software Engineer",
-          "R&D Team Lead",
-          "HR Director",
-          "Account Manager",
-          "Lawyer",
-          "Accountant",
-          "Legal Team Lead",
-          "Marketing Consultant",
-          "Marketing Analyst",
-        ],
+        choices: roleArray,
       },
       {
         name: "employeeManager",
@@ -137,9 +137,17 @@ function addEmployee() {
         ],
       },
     ])
-    .then(({ firstName, lastName }) => {
-      console.log(`${firstName} ${lastName} was added to the directory!`);\
+    .then(({ firstName, lastName, role, employeeManager }) => {
+      console.log(`${firstName} ${lastName} was added to the directory!`);
       //add the employee to the array
+      connection.query("INSERT INTO employee SET ?",
+      {
+        first_name: firstName,
+        last_name: lastName,
+        role_id: role,
+        manager: employeeManager,
+      })
+
       init();
       
     });
@@ -194,7 +202,7 @@ function updateEmployeeRole() {
           }
         ]).then((role) => {
           console.log(role);
-          // change the employee role
+          // change the employee role; 
         })
       });
   });
