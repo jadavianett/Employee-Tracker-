@@ -138,8 +138,10 @@ function addEmployee() {
       },
     ])
     .then(({ firstName, lastName }) => {
-      console.log(`${firstName} ${lastName} was added to the directory!`);
+      console.log(`${firstName} ${lastName} was added to the directory!`);\
+      //add the employee to the array
       init();
+      
     });
     
 }
@@ -170,6 +172,30 @@ function updateEmployeeRole() {
       ])
       .then((response) => {
         console.log(response);
+        inquirer.prompt([
+          { 
+            name: "newRole",
+            message: "What would you like to change their role to?",
+            type: "list",
+            choices: [
+              "Sales Lead",
+              "Salesperson",
+              "Lead Engineer",
+              "Software Engineer",
+              "R&D Team Lead",
+              "HR Director",
+              "Account Manager",
+              "Lawyer",
+              "Accountant",
+              "Legal Team Lead",
+              "Marketing Consultant",
+              "Marketing Analyst",
+            ],
+          }
+        ]).then((role) => {
+          console.log(role);
+          // change the employee role
+        })
       });
   });
 }
