@@ -49,7 +49,7 @@ function init() {
       //   viewEmployeesByManager();
       // }
       else if (selection === "Add Employee") {
-        addEmployee();
+        addEmployee(); 
       }
       // else if (selection === "Remove Employee") {
       //   removeEmployee();
@@ -119,7 +119,7 @@ function addEmployee() {
         "Sarah Lourd",
       ],
     },
-  ]);
-  //   TODO: handle asynchronicity here
-  //   console.log(`Added ${firstName} ${lastName} to database.`)
+  ]).then(({firstName, lastName}) => {
+    console.log(`${firstName} ${lastName} was added to the directory!`)
+  });
 }
