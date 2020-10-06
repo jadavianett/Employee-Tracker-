@@ -20,7 +20,7 @@ connection.connect(function (err) {
 });
 
 function init() {
-  console.log("Welcome to the Employee Manager!");
+  // console.log("Welcome to the Employee Manager!");
   inquirer
     .prompt([
       {
@@ -74,6 +74,7 @@ function viewAllEmployees() {
     function (err, res) {
       if (err) throw err;
       console.table(res);
+      init();
     }
   );
 }
@@ -85,6 +86,7 @@ function viewAllRoles() {
   ) {
     if (err) throw err;
     console.table(res);
+    init();
   });
 }
 
@@ -137,7 +139,9 @@ function addEmployee() {
     ])
     .then(({ firstName, lastName }) => {
       console.log(`${firstName} ${lastName} was added to the directory!`);
+      init();
     });
+    
 }
 
 function updateEmployeeRole() {
