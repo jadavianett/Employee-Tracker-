@@ -44,22 +44,34 @@ function init() {
         viewAllEmployees();
       } else if (selection === "View All Employees by Department") {
         viewEmployeesByDepartment();
-      } else if (selection === "View All Employees by Manager") {
-        viewEmployeesByManager();
-      } else if (selection === "Add Employee") {
-        addEmployee();
-      } else if (selection === "Remove Employee") {
-        removeEmployee();
-      } else if (selection === "Update Employee Role") {
-        updateEmployeeRole();
-      } else if (selection === "Update Employee Manager") {
-        updateEmployeeManager();
       }
+      // else if (selection === "View All Employees by Manager") {
+      //   viewEmployeesByManager();
+      // }
+      else if (selection === "Add Employee") {
+        addEmployee();
+      }
+      // else if (selection === "Remove Employee") {
+      //   removeEmployee();
+      // }
+      else if (selection === "Update Employee Role") {
+        updateEmployeeRole();
+      }
+      // else if (selection === "Update Employee Manager") {
+      //   updateEmployeeManager();
+      // }
     });
 }
 
-function viewAllEmployees () {
-
+function viewAllEmployees() {
+  connection.query(
+    `SELECT employee.first_name, employee.last_name, role.title, department.department_name, role.salary, employee.manager FROM role
+  INNER JOIN employee ON employee.role_id = role.id 
+  INNER JOIN department ON role.department_id = department.id`,
+    function (err, res) {
+      if (err) throw err;
+      console.table(res);
+    });
 }
 
 function addEmployee() {
@@ -108,6 +120,6 @@ function addEmployee() {
       ],
     },
   ]);
-//   TODO: handle asynchronicity here 
-//   console.log(`Added ${firstName} ${lastName} to database.`)
+  //   TODO: handle asynchronicity here
+  //   console.log(`Added ${firstName} ${lastName} to database.`)
 }
