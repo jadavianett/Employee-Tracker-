@@ -15,7 +15,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
   if (err) throw err;
-  console.log("connected as id " + connection.threadId + "\n");
+  // console.log("connected as id " + connection.threadId + "\n");
   init();
   connection.end;
 });
@@ -110,7 +110,6 @@ function addRole() {
           department_id: departmentId,
         });
       viewAllRoles();
-      init();
     });
 }
 
@@ -243,7 +242,6 @@ function updateEmployeeRole() {
         },
       ])
       .then((response) => {
-        console.log(response.employeeChoice);
         inquirer
           .prompt([
             {
@@ -292,7 +290,7 @@ function updateEmployeeRole() {
             } else if (role.name === "Marketing Analyst") {
               newRole = 13;
             }
-            console.log(role);
+          
            
             connection.query(
               "UPDATE employee SET ? WHERE ? ",
