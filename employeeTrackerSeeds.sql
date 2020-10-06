@@ -67,7 +67,15 @@ VALUES ("Jim", "Halpert", 1, "John Doe"),
 
 
 
+-- shows specific tables
 
-SELECT employee.first_name, employee.last_name, role.title, department.department_name, role.salary, employee.manager FROM role
-INNER JOIN employee ON employee.role_id = role.id 
-INNER JOIN department ON role.department_id = department.id;
+-- UPDATE employee SET role_id = 7 WHERE employee.id = 1;
+
+-- SELECT * FROM DEPARTMENT;
+
+-- SELECT role.id, role.title, role.salary from role; 
+-- SELECT employee.first_name, employee.last_name, role.title, department.department_name, role.salary, employee.manager FROM role
+-- INNER JOIN employee ON employee.role_id = role.id 
+-- INNER JOIN department ON role.department_id = department.id;
+
+-- SELECT first_name FROM employee;
