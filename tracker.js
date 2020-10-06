@@ -31,6 +31,7 @@ function init() {
           "View All Employees",
           "View All Employees by Department",
           "View All Employees by Manager",
+          "View All Roles",
           "Add Employee",
           "Remove Employee",
           "Update Employee Role",
@@ -44,12 +45,14 @@ function init() {
         viewAllEmployees();
       } else if (selection === "View All Employees by Department") {
         viewEmployeesByDepartment();
+      } else if (selection === "View All Roles") {
+        viewAllRoles();
       }
       // else if (selection === "View All Employees by Manager") {
       //   viewEmployeesByManager();
       // }
       else if (selection === "Add Employee") {
-        addEmployee(); 
+        addEmployee();
       }
       // else if (selection === "Remove Employee") {
       //   removeEmployee();
@@ -66,60 +69,103 @@ function init() {
 function viewAllEmployees() {
   connection.query(
     `SELECT employee.first_name, employee.last_name, role.title, department.department_name, role.salary, employee.manager FROM role
-  INNER JOIN employee ON employee.role_id = role.id 
+  INNER JOIN employee ON employee.role_id = role.id
   INNER JOIN department ON role.department_id = department.id`,
     function (err, res) {
       if (err) throw err;
       console.table(res);
-    });
+    }
+  );
+}
+
+function viewAllRoles() {
+  connection.query(`SELECT role.title, role.salary from role`, function (
+    err,
+    res
+  ) {
+    if (err) throw err;
+    console.table(res);
+  });
 }
 
 function addEmployee() {
-  inquirer.prompt([
-    {
-      name: "firstName",
-      message: "What is the employee's first name?",
-      type: "input",
-    },
-    {
-      name: "lastName",
-      message: "What is the employee's last name?",
-      type: "input",
-    },
-    {
-      name: "role",
-      message: "What is the employee's role?",
-      type: "list",
-      choices: [
-        "Sales Lead",
-        "Salesperson",
-        "Lead Engineer",
-        "Software Engineer",
-        "R&D Team Lead",
-        "HR Director",
-        "Account Manager",
-        "Lawyer",
-        "Accountant",
-        "Legal Team Lead",
-        "Marketing Consultant",
-        "Marketing Analyst",
-      ],
-    },
-    {
-      name: "employeeManager",
-      message: "Who is the employee's manager?",
-      type: "list",
-      choices: [
-        "None",
-        "John Doe",
-        "Mike Chan",
-        "Ashley Rodriguez",
-        "Kevin Tupik",
-        "Malia Brown",
-        "Sarah Lourd",
-      ],
-    },
-  ]).then(({firstName, lastName}) => {
-    console.log(`${firstName} ${lastName} was added to the directory!`)
+  inquirer
+    .prompt([
+      {
+        name: "firstName",
+        message: "What is the employee's first name?",
+        type: "input",
+      },
+      {
+        name: "lastName",
+        message: "What is the employee's last name?",
+        type: "input",
+      },
+      {
+        name: "role",
+        message: "What is the employee's role?",
+        type: "list",
+        choices: [
+          "Sales Lead",
+          "Salesperson",
+          "Lead Engineer",
+          "Software Engineer",
+          "R&D Team Lead",
+          "HR Director",
+          "Account Manager",
+          "Lawyer",
+          "Accountant",
+          "Legal Team Lead",
+          "Marketing Consultant",
+          "Marketing Analyst",
+        ],
+      },
+      {
+        name: "employeeManager",
+        message: "Who is the employee's manager?",
+        type: "list",
+        choices: [
+          "None",
+          "John Doe",
+          "Mike Chan",
+          "Ashley Rodriguez",
+          "Kevin Tupik",
+          "Malia Brown",
+          "Sarah Lourd",
+        ],
+      },
+    ])
+    .then(({ firstName, lastName }) => {
+      console.log(`${firstName} ${lastName} was added to the directory!`);
+    });
+}
+
+function updateEmployeeRole() {
+  connection.query("SELECT first_name, id FROM employee", function (err, res) {
+    if (err) throw err;
+    const employeeArray = [];
+    // console.table(res);
+    if (res.length > 0) {
+      for (let i = 0; i < res.length; i++) {
+        // console.log(res[i]);
+        const employeeObject = {
+          name: res[i].first_name,
+          value: res[i].id,
+        };
+        employeeArray.push(employeeObject);
+      }
+    }
+    inquirer
+      .prompt([
+        {
+          name: "employeeChoice",
+          message: "Choose the employee who you would like to update.",
+          type: "list",
+          choices: employeeArray,
+        },
+      ])
+      .then((response) => {
+        console.log(response);
+      });
   });
 }
